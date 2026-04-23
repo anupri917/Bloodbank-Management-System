@@ -23,6 +23,9 @@ public class RequestController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private com.bloodbank.repository.BloodUnitRepository bloodUnitRepository;
+
     @PostMapping
     public ResponseEntity<?> createRequest(@RequestBody BloodRequest request, Authentication authentication) {
         String username = authentication.getName();
@@ -32,6 +35,20 @@ public class RequestController {
         request.setRequester(user);
         request.setRequestDate(LocalDateTime.now());
         request.setStatus("PENDING");
+        
+        // Smart matching: Inventory first
+        long availableUnits = bloodUnitRepository.countByBloodGroupAndBloodComponentTypeAndStatus(
+                request.getBloodGroup(), request.getBloodComponentType(), "AVAILABLE");
+                
+        if (availableUnits >= request.getQuantityUnits()) {
+            System.out.println("Smart Match: Inventory has enough units for request from " + username);
+        } else {
+            // Not enough in inventory, check Emergency Donors if urgent or critical
+            if ("urgent".equalsIgnoreCase(request.getUrgency()) || "critical".equalsIgnoreCase(request.getUrgency())) {
+                List<User> emergencyDonors = userRepository.findByIsEmergencyDonorAndBloodGroup(true, request.getBloodGroup());
+                System.out.println("Smart Match: Shortage! Alerting " + emergencyDonors.size() + " emergency donors.");
+            }
+        }
         
         return ResponseEntity.ok(requestRepository.save(request));
     }

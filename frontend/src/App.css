@@ -41,19 +41,19 @@
 
 /* Sidebar specific */
 .sidebar {
-  width: 250px;
   height: calc(100vh - 70px);
-  position: fixed;
-  left: 0;
+  position: sticky;
   top: 70px;
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  flex-shrink: 0;
 }
 
+/* Remove fixed margin since we are using flex now */
 .sidebar + .page-content {
-  margin-left: 250px; /* Space for sidebar */
+  margin-left: 0;
 }
 
 .nav-link {

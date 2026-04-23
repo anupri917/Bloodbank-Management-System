@@ -8,6 +8,12 @@ import Register from './pages/auth/Register';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import WorkerDashboard from './pages/worker/WorkerDashboard';
 import UserDashboard from './pages/user/UserDashboard';
+import DonateBlood from './pages/user/DonateBlood';
+import RequestBlood from './pages/user/RequestBlood';
+import Home from './pages/public/Home';
+import Activity from './pages/public/Activity';
+import AboutTeam from './pages/public/AboutTeam';
+import Contact from './pages/public/Contact';
 import './App.css';
 
 // Simple auth check helper
@@ -20,7 +26,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
   const role = getUserRole();
   if (allowedRoles && !allowedRoles.includes(role)) {
-    return <Navigate to="/" />;
+    return <Navigate to="/dashboard" />;
   }
   return children;
 };
@@ -31,14 +37,20 @@ function App() {
   return (
     <Router>
       <div className="app-container">
-        {auth && <Navbar />}
+        <Navbar />
         <div className="main-content">
           {auth && <Sidebar />}
           <div className="page-content">
             <Routes>
-              <Route path="/login" element={!auth ? <Login /> : <Navigate to="/" />} />
-              <Route path="/register" element={!auth ? <Register /> : <Navigate to="/" />} />
+              <Route path="/login" element={!auth ? <Login /> : <Navigate to="/dashboard" />} />
+              <Route path="/register" element={!auth ? <Register /> : <Navigate to="/dashboard" />} />
               
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/activity" element={<Activity />} />
+              <Route path="/team" element={<AboutTeam />} />
+              <Route path="/contact" element={<Contact />} />
+
               <Route path="/admin" element={
                 <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
                   <AdminDashboard />
@@ -56,8 +68,20 @@ function App() {
                   <UserDashboard />
                 </ProtectedRoute>
               } />
+              
+              <Route path="/donate" element={
+                <ProtectedRoute allowedRoles={['ROLE_USER']}>
+                  <DonateBlood />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/request" element={
+                <ProtectedRoute allowedRoles={['ROLE_USER']}>
+                  <RequestBlood />
+                </ProtectedRoute>
+              } />
 
-              <Route path="/" element={
+              <Route path="/dashboard" element={
                 <ProtectedRoute>
                   {getUserRole() === 'ROLE_ADMIN' ? <Navigate to="/admin" /> :
                    getUserRole() === 'ROLE_WORKER' ? <Navigate to="/worker" /> :

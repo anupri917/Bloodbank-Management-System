@@ -31,7 +31,7 @@ public class PdfGenerationUtil {
             Paragraph body = new Paragraph(
                     "This certificate is proudly presented to:\n\n" +
                     donation.getDonor().getUsername() + "\n\n" +
-                    "For their generous donation of " + donation.getBloodType() + " blood on " +
+                    "For their generous donation of " + donation.getBloodGroup() + " (" + donation.getBloodComponentType() + ") blood on " +
                     donation.getDonationDate() + ".\n\n" +
                     "Quantity: " + donation.getQuantityMl() + " ml\n\n" +
                     "Your contribution has helped save lives. Thank you!",

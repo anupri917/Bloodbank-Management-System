@@ -1,18 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #FF4B4B;
-  --primary-hover: #ff3333;
-  --secondary: #2B2B2B;
-  --bg-color: #0f172a;
-  --text-color: #f8fafc;
-  --text-muted: #94a3b8;
-  --card-bg: rgba(30, 41, 59, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  /* Primary Medical Red */
+  --primary: #d32f2f;
+  --primary-hover: #b71c1c;
+  --primary-light: #ff6659;
+  
+  /* Light Mode Variables */
+  --bg-color: #f8fafc;
+  --surface-color: #ffffff;
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  
+  /* Status Colors */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode Variables */
+    --bg-color: #0f172a;
+    --surface-color: #1e293b;
+    --text-color: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-bg: rgba(30, 41, 59, 0.85);
+  }
 }
 
 * {
@@ -27,23 +46,31 @@ body {
   color: var(--text-color);
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Glassmorphism Utilities */
-.glass {
-  background: var(--card-bg);
+/* Glassmorphism & Card Utilities */
+.glass, .card {
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
-  box-shadow: var(--glass-shadow);
-  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  border-radius: 12px;
+  padding: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 /* Form Elements */
 input, select, textarea {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--surface-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   color: var(--text-color);
@@ -54,7 +81,7 @@ input, select, textarea {
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(255, 75, 75, 0.2);
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
 }
 
 button {
@@ -75,7 +102,7 @@ button {
 .btn-primary:hover {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 75, 75, 0.4);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
 }
 
 .btn-secondary {
@@ -85,7 +112,7 @@ button {
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-color);
   transform: translateY(-2px);
 }
 
@@ -93,11 +120,35 @@ button {
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-color);
   font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 p {
   color: var(--text-muted);
   line-height: 1.6;
+}
+
+/* Tables */
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--surface-color);
+  font-weight: 600;
 }
 
 /* Animations */

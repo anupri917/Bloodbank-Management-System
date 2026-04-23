@@ -34,7 +34,9 @@ public class InventoryController {
     @PutMapping("/{id}")
     public ResponseEntity<BloodUnit> updateUnit(@PathVariable Long id, @RequestBody BloodUnit unitDetails) {
         return bloodUnitRepository.findById(id).map(unit -> {
-            unit.setBloodType(unitDetails.getBloodType());
+            unit.setBloodGroup(unitDetails.getBloodGroup());
+            unit.setBloodComponentType(unitDetails.getBloodComponentType());
+            unit.setUnits(unitDetails.getUnits());
             unit.setCollectionDate(unitDetails.getCollectionDate());
             if (unitDetails.getCollectionDate() != null) {
                 unit.setExpiryDate(unitDetails.getCollectionDate().plusDays(42));

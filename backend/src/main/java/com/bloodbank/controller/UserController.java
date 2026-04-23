@@ -43,6 +43,20 @@ public class UserController {
         donation.setDonor(user);
         donation.setDonationDate(LocalDate.now());
         
+        // Calculate next eligible date based on component
+        int daysToWait = 56; // default for whole blood / rbc
+        if (donation.getBloodComponentType() != null) {
+            switch (donation.getBloodComponentType().toLowerCase()) {
+                case "platelets": daysToWait = 7; break;
+                case "plasma": daysToWait = 28; break;
+                case "super red": daysToWait = 112; break;
+                case "rbc":
+                case "whole blood":
+                default: daysToWait = 56; break;
+            }
+        }
+        donation.setNextEligibleDate(LocalDate.now().plusDays(daysToWait));
+        
         user.setLastDonationDate(LocalDate.now());
         userRepository.save(user);
 

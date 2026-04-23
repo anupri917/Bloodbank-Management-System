@@ -18,4 +18,12 @@ public class User {
     private String governmentId; // Encrypted
 
     private java.time.LocalDate lastDonationDate;
+    
+    // New Apheresis Fields
+    private String bloodGroup; // A+, O-, etc.
+    private Double bmi;
+    private Double haemoglobin;
+    private String medicalHistory; // String text field
+    private boolean isEmergencyDonor;
+    private String empId; // For workers
 }

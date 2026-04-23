@@ -16,9 +16,11 @@ public class BloodRequest {
     @JoinColumn(name = "user_id")
     private User requester; // The User or Receiver requesting blood
 
-    private String bloodType;
+    private String bloodGroup;
+    private String bloodComponentType;
     private Integer quantityUnits;
     private String status; // PENDING, APPROVED, REJECTED, FULFILLED
+    private String urgency; // normal, urgent, critical
 
     private LocalDateTime requestDate;
 }

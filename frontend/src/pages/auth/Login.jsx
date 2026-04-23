@@ -33,7 +33,7 @@ const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-card glass">
-        <h2 style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: '1rem' }}>BloodBank Login</h2>
+        <h2 style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: '1rem' }}>Welcome to Apheresis</h2>
         {error && <div style={{ color: 'var(--danger)', textAlign: 'center' }}>{error}</div>}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div className="form-group">
